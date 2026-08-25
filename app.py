@@ -12,9 +12,9 @@ HTML = r'''<!doctype html>
 <script>
 let lang=localStorage.getItem('elektrikaLang')||'ru';
 const machines={
-ru:['Кефель 5','Кефель 6','Кефель 7','Кефель 8','Кефель 9','Кефель 10','Кефель 11','Кефель 12','Кефель 13','C1','C2','C3','RDM','Машина для апельсинов','Машина для стаканов','Экструдер 4','Экструдер 5','Экструдер 6'],
-he:['כפל 5','כפל 6','כפל 7','כפל 8','כפל 9','כפל 10','כפל 11','כפל 12','כפל 13','C1','C2','C3','RDM','מכונת תפוז','מכונת כוסות','אקסטרודר 4','אקסטרודר 5','אקסטרודר 6'],
-en:['Kefel 5','Kefel 6','Kefel 7','Kefel 8','Kefel 9','Kefel 10','Kefel 11','Kefel 12','Kefel 13','C1','C2','C3','RDM','Orange Machine','Cup Machine','Extruder 4','Extruder 5','Extruder 6']};
+ru:['Кефель 5','Кефель 6','Кефель 7','Кефель 8','Кефель 9','Кефель 10','Кефель 11','Кефель 12','Кефель 13','C1','C2','C3','RDM','Машина печати','Машина формовки стаканов','Экструдер 4','Экструдер 5','Экструдер 6'],
+he:['כפל 5','כפל 6','כפל 7','כפל 8','כפל 9','כפל 10','כפל 11','כפל 12','כפל 13','C1','C2','C3','RDM','מכונת דפוס','מכונת כוסות','אקסטרודר 4','אקסטרודר 5','אקסטרודר 6'],
+en:['Kefel 5','Kefel 6','Kefel 7','Kefel 8','Kefel 9','Kefel 10','Kefel 11','Kefel 12','Kefel 13','C1','C2','C3','RDM','Printing Machine','Cup Forming Machine','Extruder 4','Extruder 5','Extruder 6']};
 const T={ru:{title:'Электрический склад',stock:'Общий склад',machines:'Машины',sub:'Электрические детали и оборудование',work:'Здесь будем отдельно строить склад.',choose:'Выберите машину',card:'карточку этой машины сделаем следующим этапом.'},he:{title:'מחסן חשמל',stock:'מחסן כללי',machines:'מכונות',sub:'חלקי חשמל וציוד',work:'כאן נבנה את המחסן בנפרד.',choose:'בחר מכונה',card:'את כרטיס המכונה נבנה בשלב הבא.'},en:{title:'Electrical Warehouse',stock:'General Warehouse',machines:'Machines',sub:'Electrical parts and equipment',work:'We will build the warehouse here separately.',choose:'Select a machine',card:'we will build this machine card in the next step.'}};
 function makeMachines(){let g=document.getElementById('machineGrid');g.innerHTML='';machines[lang].forEach((name,i)=>{let b=document.createElement('button');b.className='machine';b.textContent=name;b.onclick=()=>openMachine(name);g.appendChild(b)})}
 function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('.diamond-button').forEach(x=>x.classList.remove('active'));document.getElementById(p+'Btn').classList.add('active')}
