@@ -3,49 +3,27 @@ from flask import Flask, render_template_string
 app = Flask(__name__)
 
 HTML = r'''<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Электрический склад</title>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Электрический склад</title>
 <style>
-*{box-sizing:border-box} :root{--bg:#eef2f3;--panel:#f8faf9;--ink:#34454b;--muted:#718087;--line:#ccd7d8;--accent:#527d83;--soft:#e0ebea}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#536a70;color:#f8fbfb;padding:14px 20px}.top{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}h1{margin:0;font-size:25px}.lang button{border:0;border-radius:8px;padding:7px 10px;margin-left:4px;cursor:pointer}
-.workspace{max-width:1250px;margin:auto;padding:18px 14px;display:grid;grid-template-columns:145px 1fr;gap:18px;min-height:calc(100vh - 65px)}
-.side{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:8px}.diamond-button{width:112px;height:112px;border:0;background:transparent;cursor:pointer;padding:0}.diamond{width:80px;height:80px;margin:16px auto;background:#f7faf9;border:2px solid var(--line);border-radius:13px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 9px #0001}.diamond-inner{width:102px;transform:rotate(-45deg);text-align:center;font-weight:700;font-size:13px;line-height:1.1}.icon{display:block;font-size:20px;margin-bottom:3px}.diamond-button.active .diamond,.diamond-button:hover .diamond{background:var(--soft);border-color:var(--accent)}
-.content{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;min-width:0}.content h2{margin:0 0 7px;font-size:27px}.subtitle{color:var(--muted);margin:0 0 20px}.page{display:none}.page.active{display:block}.box{border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff;min-height:350px}
-.machine-grid{display:grid;grid-template-columns:repeat(4,minmax(105px,1fr));gap:12px}.machine{min-height:76px;border:1px solid var(--line);border-radius:10px;background:#f2f6f5;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;padding:10px}.machine:hover{background:var(--soft);border-color:var(--accent)}
-@media(max-width:720px){.workspace{grid-template-columns:105px 1fr;gap:8px;padding:10px 6px}.diamond-button{width:92px;height:92px}.diamond{width:64px;height:64px;margin:14px auto}.diamond-inner{width:86px;font-size:11px}.icon{font-size:17px}.content{padding:14px 10px}.content h2{font-size:21px}.machine-grid{grid-template-columns:repeat(2,minmax(78px,1fr));gap:8px}.machine{min-height:62px;font-size:12px;padding:6px}h1{font-size:20px}}
-</style>
-</head>
-<body>
+*{box-sizing:border-box}:root{--bg:#eef2f3;--panel:#f8faf9;--ink:#34454b;--muted:#718087;--line:#ccd7d8;--accent:#527d83;--soft:#e0ebea}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}header{background:#536a70;color:#f8fbfb;padding:14px 20px}.top{max-width:1250px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}h1{margin:0;font-size:25px}.lang button{border:0;border-radius:8px;padding:7px 10px;margin-left:4px;cursor:pointer}.workspace{max-width:1250px;margin:auto;padding:18px 14px;display:grid;grid-template-columns:145px 1fr;gap:18px;min-height:calc(100vh - 65px)}.side{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:8px}.diamond-button{width:112px;height:112px;border:0;background:transparent;cursor:pointer;padding:0}.diamond{width:80px;height:80px;margin:16px auto;background:#f7faf9;border:2px solid var(--line);border-radius:13px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 9px #0001}.diamond-inner{width:102px;transform:rotate(-45deg);text-align:center;font-weight:700;font-size:13px;line-height:1.1}.icon{display:block;font-size:20px;margin-bottom:3px}.diamond-button.active .diamond,.diamond-button:hover .diamond{background:var(--soft);border-color:var(--accent)}.content{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:22px;min-width:0}.content h2{margin:0 0 7px;font-size:27px}.subtitle{color:var(--muted);margin:0 0 20px}.page{display:none}.page.active{display:block}.box{border:1px solid var(--line);border-radius:12px;padding:20px;background:#fff;min-height:350px}.machine-grid{display:grid;grid-template-columns:repeat(4,minmax(105px,1fr));gap:12px}.machine{min-height:76px;border:1px solid var(--line);border-radius:10px;background:#f2f6f5;color:var(--ink);font-size:14px;font-weight:700;cursor:pointer;padding:10px}.machine:hover{background:var(--soft);border-color:var(--accent)}@media(max-width:720px){.workspace{grid-template-columns:105px 1fr;gap:8px;padding:10px 6px}.diamond-button{width:92px;height:92px}.diamond{width:64px;height:64px;margin:14px auto}.diamond-inner{width:86px;font-size:11px}.icon{font-size:17px}.content{padding:14px 10px}.content h2{font-size:21px}.machine-grid{grid-template-columns:repeat(2,minmax(78px,1fr));gap:8px}.machine{min-height:62px;font-size:12px;padding:6px}h1{font-size:20px}}
+</style></head><body>
 <header><div class="top"><h1>⚡ <span id="appTitle">Электрический склад</span></h1><div class="lang"><button onclick="setLang('ru')">RU</button><button onclick="setLang('he')">עברית</button><button onclick="setLang('en')">EN</button></div></div></header>
-<main class="workspace">
-<nav class="side">
-<button class="diamond-button active" id="stockBtn" onclick="showPage('stock')"><div class="diamond"><div class="diamond-inner"><span class="icon">📦</span><span id="stockNav">Общий склад</span></div></div></button>
-<button class="diamond-button" id="machinesBtn" onclick="showPage('machines')"><div class="diamond"><div class="diamond-inner"><span class="icon">🏭</span><span id="machinesNav">Машины</span></div></div></button>
-</nav>
-<section class="content">
-<div id="stock" class="page active"><h2 id="stockTitle">Общий склад</h2><p class="subtitle" id="stockSub">Электрические детали и оборудование</p><div class="box"><b id="stockWork">Здесь будем отдельно строить склад.</b></div></div>
-<div id="machines" class="page"><h2 id="machinesTitle">Машины</h2><p class="subtitle" id="machinesSub">Выберите машину</p><div class="machine-grid" id="machineGrid"></div></div>
-</section>
-</main>
+<main class="workspace"><nav class="side"><button class="diamond-button active" id="stockBtn" onclick="showPage('stock')"><div class="diamond"><div class="diamond-inner"><span class="icon">📦</span><span id="stockNav">Общий склад</span></div></div></button><button class="diamond-button" id="machinesBtn" onclick="showPage('machines')"><div class="diamond"><div class="diamond-inner"><span class="icon">🏭</span><span id="machinesNav">Машины</span></div></div></button></nav><section class="content"><div id="stock" class="page active"><h2 id="stockTitle">Общий склад</h2><p class="subtitle" id="stockSub"></p><div class="box"><b id="stockWork"></b></div></div><div id="machines" class="page"><h2 id="machinesTitle">Машины</h2><p class="subtitle" id="machinesSub"></p><div class="machine-grid" id="machineGrid"></div></div></section></main>
 <script>
 let lang=localStorage.getItem('elektrikaLang')||'ru';
-const machineNames=['Кефель 5','Кефель 6','Кефель 7','Кефель 8','Кефель 9','Кефель 10','Кефель 11','Кефель 12','Кефель 13','C1','C2','C3','RDM','Механат тфуз','Механат косот','Экструдер 4','Экструдер 5','Экструдер 6'];
-const T={ru:{title:'Электрический склад',stock:'Общий склад',machines:'Машины',sub:'Электрические детали и оборудование',work:'Здесь будем отдельно строить склад.',choose:'Выберите машину'},he:{title:'מחסן חשמל',stock:'מחסן כללי',machines:'מכונות',sub:'חלקי חשמל וציוד',work:'כאן נבנה את המחסן בנפרד.',choose:'בחר מכונה'},en:{title:'Electrical Warehouse',stock:'General Warehouse',machines:'Machines',sub:'Electrical parts and equipment',work:'We will build the warehouse here separately.',choose:'Select a machine'}};
-function makeMachines(){let g=document.getElementById('machineGrid');g.innerHTML='';machineNames.forEach((name,i)=>{let b=document.createElement('button');b.className='machine';b.textContent=name;b.onclick=()=>openMachine(i,name);g.appendChild(b)})}
+const machines={
+ru:['Кефель 5','Кефель 6','Кефель 7','Кефель 8','Кефель 9','Кефель 10','Кефель 11','Кефель 12','Кефель 13','C1','C2','C3','RDM','Машина для апельсинов','Машина для стаканов','Экструдер 4','Экструдер 5','Экструдер 6'],
+he:['כפל 5','כפל 6','כפל 7','כפל 8','כפל 9','כפל 10','כפל 11','כפל 12','כפל 13','C1','C2','C3','RDM','מכונת תפוז','מכונת כוסות','אקסטרודר 4','אקסטרודר 5','אקסטרודר 6'],
+en:['Kefel 5','Kefel 6','Kefel 7','Kefel 8','Kefel 9','Kefel 10','Kefel 11','Kefel 12','Kefel 13','C1','C2','C3','RDM','Orange Machine','Cup Machine','Extruder 4','Extruder 5','Extruder 6']};
+const T={ru:{title:'Электрический склад',stock:'Общий склад',machines:'Машины',sub:'Электрические детали и оборудование',work:'Здесь будем отдельно строить склад.',choose:'Выберите машину',card:'карточку этой машины сделаем следующим этапом.'},he:{title:'מחסן חשמל',stock:'מחסן כללי',machines:'מכונות',sub:'חלקי חשמל וציוד',work:'כאן נבנה את המחסן בנפרד.',choose:'בחר מכונה',card:'את כרטיס המכונה נבנה בשלב הבא.'},en:{title:'Electrical Warehouse',stock:'General Warehouse',machines:'Machines',sub:'Electrical parts and equipment',work:'We will build the warehouse here separately.',choose:'Select a machine',card:'we will build this machine card in the next step.'}};
+function makeMachines(){let g=document.getElementById('machineGrid');g.innerHTML='';machines[lang].forEach((name,i)=>{let b=document.createElement('button');b.className='machine';b.textContent=name;b.onclick=()=>openMachine(name);g.appendChild(b)})}
 function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');document.querySelectorAll('.diamond-button').forEach(x=>x.classList.remove('active'));document.getElementById(p+'Btn').classList.add('active')}
-function openMachine(n,name){alert(name+' — карточку этой машины сделаем следующим этапом.')}
-function setLang(l){lang=l;localStorage.setItem('elektrikaLang',l);let t=T[l];document.documentElement.lang=l;document.getElementById('appTitle').textContent=t.title;document.getElementById('stockNav').textContent=t.stock;document.getElementById('machinesNav').textContent=t.machines;document.getElementById('stockTitle').textContent=t.stock;document.getElementById('machinesTitle').textContent=t.machines;document.getElementById('stockSub').textContent=t.sub;document.getElementById('stockWork').textContent=t.work;document.getElementById('machinesSub').textContent=t.choose;makeMachines()}
+function openMachine(name){alert(name+' — '+T[lang].card)}
+function setLang(l){lang=l;localStorage.setItem('elektrikaLang',l);let t=T[l];document.documentElement.lang=l;document.documentElement.dir=l==='he'?'rtl':'ltr';document.getElementById('appTitle').textContent=t.title;document.getElementById('stockNav').textContent=t.stock;document.getElementById('machinesNav').textContent=t.machines;document.getElementById('stockTitle').textContent=t.stock;document.getElementById('machinesTitle').textContent=t.machines;document.getElementById('stockSub').textContent=t.sub;document.getElementById('stockWork').textContent=t.work;document.getElementById('machinesSub').textContent=t.choose;makeMachines()}
 setLang(lang);
-</script>
-</body></html>'''
+</script></body></html>'''
 
 @app.route('/')
-def home():
-    return render_template_string(HTML)
+def home(): return render_template_string(HTML)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__': app.run(debug=True)
