@@ -1,6 +1,7 @@
 import legacy
 import machine_parts_patch
 import search_patch
+import extruder_location_label_patch
 
 PATCH = r'''<style>
 .qty-control{display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}.qty-control button{width:36px;height:36px;border:1px solid #aebfc1;border-radius:8px;background:#eef5f3;color:#34454b;font-size:22px;font-weight:700;cursor:pointer}.qty-control .qnum{min-width:42px;text-align:center;font-size:17px;font-weight:700}.warehouse-main-add{display:inline-block;margin:0 0 12px;padding:11px 16px;border:0;border-radius:9px;background:#527d83;color:#fff;font-size:15px;font-weight:700;cursor:pointer}.category-add{display:inline-block;margin:0 0 14px}.warehouse-grid .custom-cat{position:relative}.warehouse-grid .custom-cat .cat-delete{position:absolute;top:3px;right:3px;width:24px;height:24px;border:0;border-radius:50%;background:#fff;color:#777;cursor:pointer;display:none}.owner-mode .warehouse-grid .custom-cat .cat-delete{display:block}#addItemBtn{display:none!important}.item-actions button{cursor:pointer}.internal-code{font-weight:700;white-space:nowrap}
@@ -33,6 +34,7 @@ PATCH = r'''<style>
 NO_TRANSLATE = r'''<meta name="google" content="notranslate"><meta name="robots" content="notranslate">'''
 legacy.HTML = legacy.HTML.replace('</head>', NO_TRANSLATE + '</head>')
 legacy.HTML = legacy.HTML.replace('</body>', PATCH + '</body>')
+extruder_location_label_patch.apply(legacy)
 machine_parts_patch.apply(legacy)
 search_patch.apply(legacy)
 app = legacy.app
