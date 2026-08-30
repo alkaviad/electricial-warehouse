@@ -1,3 +1,5 @@
+import control_catalog_patch
+
 def apply(legacy):
     patch = r'''<style>
 .machine-parts-add{display:inline-block;margin:12px 0;padding:10px 15px;border:0;border-radius:9px;background:#527d83;color:#fff;font-weight:700;cursor:pointer}.machine-parts-wrap{overflow:auto;border:1px solid #ccd7d8;border-radius:10px;background:#fff;margin-top:10px}.machine-parts-wrap table{min-width:860px}.machine-parts-actions button{padding:4px 7px;cursor:pointer}.machine-parts-empty{padding:18px;color:#718087}.machine-parts-link{margin-top:14px;min-height:68px}.machine-parts-modal label{display:block;font-weight:700;margin:10px 0 4px}.machine-parts-modal input,.machine-parts-modal textarea{width:100%;padding:10px;border:1px solid #ccd7d8;border-radius:8px;background:#fbfdfc}.machine-parts-modal textarea{min-height:70px}.mp-inline{margin-top:16px;padding:14px;border:1px solid #ccd7d8;border-radius:12px;background:#fff}.mp-match{margin-top:8px;padding:9px 10px;border-radius:8px;background:#eef5f3;font-size:13px;line-height:1.4}.mp-match:empty{display:none}.mp-dup{background:#fff2e8}
@@ -39,7 +41,6 @@ def apply(legacy):
  const oldMachine=window.openMachine;window.openMachine=function(i){oldMachine(i);setTimeout(renderInline,0)};
  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{if(document.getElementById('machinePartsPage').classList.contains('active'))renderMachineParts();renderInline()},0)));
 
- // Warehouse duplicate protection: do not create a second identical stock position in the same category.
  const baseSaveWarehouseItem=window.saveWarehouseItem;
  window.saveWarehouseItem=function(){if(currentWarehouseEditIndex<0){let model=wiModel.value.trim(),code=(document.getElementById('wiInternalCode')||{}).value||'',mfr=wiManufacturer.value.trim(),nm=norm(model),nc=norm(code),nf=norm(mfr);let dup=inventory.find(x=>x.cat===currentWarehouseCat&&((nc&&norm(x.internalCode)===nc)||(nm&&norm(x.name)===nm&&(!nf||norm(x.manufacturer)===nf))));if(dup){alert(tx('Такая позиция уже есть в этой таблице. Сейчас на складе: ','הפריט כבר קיים בטבלה הזאת. כמות במחסן: ','This item already exists in this table. Warehouse quantity: ')+(dup.qty??0));return}}baseSaveWarehouseItem()}
 
