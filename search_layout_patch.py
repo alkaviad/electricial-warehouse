@@ -1,7 +1,7 @@
 def apply(legacy):
     patch = r'''<style>
-/* Search page: compact layout without changing other active pages. */
-#searchPage{padding-top:0!important}
+/* Compact search layout and permanent navigation. */
+#searchPage{padding-top:0!important;margin-top:0!important}
 #searchPage>h2{margin:0 0 4px!important}
 #searchPage>.subtitle{margin:0 0 10px!important}
 #searchPage .search-center{gap:9px!important}
@@ -18,17 +18,35 @@ def apply(legacy):
 </style>
 <script>
 (function(){
-  function compactSearch(){
-    const p=document.getElementById('searchPage');
-    if(!p)return;
-    Array.from(p.children).forEach(el=>{
-      if(el.matches('h2,.subtitle,.search-center'))return;
-      const txt=(el.textContent||'').trim();
-      if(!txt && el.children.length===0)el.style.display='none';
+  function normalizePages(){
+    const content=document.querySelector('.content');
+    if(!content)return;
+    /* Several feature patches append their pages after </main>.
+       Move every application page into the real content panel so the
+       large empty panel can never remain above the active page. */
+    document.querySelectorAll('.page').forEach(p=>{
+      if(p.parentElement!==content)content.appendChild(p);
     });
   }
-  compactSearch();
-  document.addEventListener('click',()=>setTimeout(compactSearch,0));
+
+  normalizePages();
+  document.addEventListener('DOMContentLoaded',normalizePages);
+
+  const oldShow=window.showPage;
+  if(oldShow){
+    window.showPage=function(id){
+      normalizePages();
+      return oldShow(id);
+    };
+  }
+
+  const oldSearch=window.openSearchCenter;
+  if(oldSearch){
+    window.openSearchCenter=function(){
+      normalizePages();
+      return oldSearch();
+    };
+  }
 })();
 </script>'''
     legacy.HTML = legacy.HTML.replace('</body>', patch + '</body>')
