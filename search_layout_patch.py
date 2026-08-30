@@ -1,6 +1,6 @@
 def apply(legacy):
     patch = r'''<style>
-/* Compact search layout and permanent navigation. */
+/* Keep navigation compact; patched pages are placed inside .content by JS. */
 #searchPage{padding-top:0!important;margin-top:0!important}
 #searchPage>h2{margin:0 0 4px!important}
 #searchPage>.subtitle{margin:0 0 10px!important}
@@ -21,32 +21,28 @@ def apply(legacy):
   function normalizePages(){
     const content=document.querySelector('.content');
     if(!content)return;
-    /* Several feature patches append their pages after </main>.
-       Move every application page into the real content panel so the
-       large empty panel can never remain above the active page. */
     document.querySelectorAll('.page').forEach(p=>{
       if(p.parentElement!==content)content.appendChild(p);
     });
   }
-
+  function repairActivePage(){
+    normalizePages();
+    const content=document.querySelector('.content');
+    if(!content)return;
+    const active=Array.from(content.querySelectorAll(':scope > .page.active'));
+    if(active.length>1){
+      const keep=active[active.length-1];
+      active.forEach(p=>{if(p!==keep)p.classList.remove('active')});
+    }
+  }
   normalizePages();
-  document.addEventListener('DOMContentLoaded',normalizePages);
+  document.addEventListener('DOMContentLoaded',repairActivePage);
+  document.addEventListener('click',()=>setTimeout(repairActivePage,0));
 
   const oldShow=window.showPage;
-  if(oldShow){
-    window.showPage=function(id){
-      normalizePages();
-      return oldShow(id);
-    };
-  }
-
+  if(oldShow){window.showPage=function(id){normalizePages();return oldShow(id)}}
   const oldSearch=window.openSearchCenter;
-  if(oldSearch){
-    window.openSearchCenter=function(){
-      normalizePages();
-      return oldSearch();
-    };
-  }
+  if(oldSearch){window.openSearchCenter=function(){normalizePages();return oldSearch()}}
 })();
 </script>'''
     legacy.HTML = legacy.HTML.replace('</body>', patch + '</body>')
