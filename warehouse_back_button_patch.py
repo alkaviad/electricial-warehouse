@@ -1,22 +1,19 @@
 def apply(legacy):
+    # The redundant button has the fixed id warehouseBack in legacy.py.
+    # Hide it directly instead of depending on its translated text or class name.
     patch = r'''<style>
-/* Main warehouse is already available in the permanent navigation. */
-#warehouseCategory .back-btn{display:none!important}
+#warehouseBack{display:none!important}
 </style>
 <script>
 (function(){
-  function removeRedundantWarehouseBack(){
-    const page=document.getElementById('warehouseCategory');
-    if(!page)return;
-    page.querySelectorAll('button').forEach(b=>{
-      const t=(b.textContent||'').trim().toLowerCase();
-      if(t.includes('מחסן ראשי')||t.includes('главный склад')||t.includes('main warehouse')){
-        b.style.display='none';
-      }
-    });
+  function hideWarehouseBack(){
+    const b=document.getElementById('warehouseBack');
+    if(b){b.style.setProperty('display','none','important');b.hidden=true;}
   }
-  removeRedundantWarehouseBack();
-  document.addEventListener('click',()=>setTimeout(removeRedundantWarehouseBack,0));
+  hideWarehouseBack();
+  document.addEventListener('DOMContentLoaded',hideWarehouseBack);
+  document.addEventListener('click',()=>setTimeout(hideWarehouseBack,0));
+  setTimeout(hideWarehouseBack,100);
 })();
 </script>'''
     legacy.HTML = legacy.HTML.replace('</body>', patch + '</body>')
