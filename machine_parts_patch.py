@@ -1,4 +1,5 @@
 import control_catalog_patch
+import extruder_panels_patch
 
 def apply(legacy):
     patch = r'''<style>
@@ -48,3 +49,4 @@ def apply(legacy):
 })();
 </script>'''
     legacy.HTML = legacy.HTML.replace('</body>', patch + '</body>')
+    extruder_panels_patch.apply(legacy)
