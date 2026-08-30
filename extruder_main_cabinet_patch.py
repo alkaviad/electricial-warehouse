@@ -19,7 +19,7 @@ def apply(legacy):
  window.openMainCabinetEdit=function(i){openMachinePartEditInline('maincab',activeMachine,null,i)}
  function addTile(){let g=document.getElementById('extruderGrid');if(!g||currentMachineIndex===null)return;if(document.getElementById('extruderMainCabinetTile'))return;let w=document.createElement('div');w.className='tile-wrap';w.id='extruderMainCabinetTile';w.innerHTML=`<button class="section-tile main-cabinet-tile" onclick="openExtruderMainCabinet()">${tx('Главный электрощит','לוח חשמל ראשי','Main electrical cabinet')}</button>`;g.appendChild(w)}
  const oldOpenExtruder=window.openExtruder;window.openExtruder=function(i){oldOpenExtruder(i);setTimeout(addTile,0)};
- const baseSave=window.saveMachinePart;window.saveMachinePart=function(){baseSave();setTimeout(()=>{if(document.getElementById('extruderMainCabinetPage').classList.contains('active'))renderExtruderMainCabinet()},0)};
+ document.addEventListener('click',function(ev){if(ev.target&&ev.target.id==='mpSave')setTimeout(()=>{let p=document.getElementById('extruderMainCabinetPage');if(p&&p.classList.contains('active'))renderExtruderMainCabinet()},20)});
  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{if(document.getElementById('extruderPage').classList.contains('active')){let old=document.getElementById('extruderMainCabinetTile');if(old)old.remove();addTile()}if(document.getElementById('extruderMainCabinetPage').classList.contains('active'))renderExtruderMainCabinet()},0)));
 })();
 </script>'''
