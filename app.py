@@ -5,7 +5,11 @@ PATCH = r'''<style>
 </style>
 <script>
 (function(){
-  const CACHE_KEY='warehouse_translation_cache_clean_v1';
+  // Prevent browser/Google page translation from rewriting our DOM after the app changes language.
+  document.documentElement.setAttribute('translate','no');
+  document.body.classList.add('notranslate');
+
+  const CACHE_KEY='warehouse_translation_cache_clean_v2';
   let trCache={};try{trCache=JSON.parse(localStorage.getItem(CACHE_KEY)||'{}')}catch(e){}
   let renderToken=0;
   function saveCache(){try{localStorage.setItem(CACHE_KEY,JSON.stringify(trCache))}catch(e){}}
@@ -56,13 +60,14 @@ PATCH = r'''<style>
     rows.forEach(async o=>{const row=warehouseItemsBody.querySelector(`tr[data-widx="${o.i}"]`);if(!row)return;const[n,s,m]=await Promise.all([displayText(o.x.name,target,'name'),displayText(o.x.specs,target,'specs'),displayText(o.x.machine||'',target,'machine')]);if(token!==renderToken||target!==lang||!row.isConnected)return;const ne=row.querySelector('.tr-name'),se=row.querySelector('.tr-specs'),me=row.querySelector('.tr-machine');if(ne)ne.textContent=n;if(se)se.textContent=s;if(me)me.textContent=m})
   };
 
-  // Important: the original language function from legacy.py is intentionally left untouched.
-  // It already contains complete RU / Hebrew / English tables and worked before warehouse edits were added.
+  // Keep the original RU/HE/EN switch from legacy.py untouched.
   document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setTimeout(()=>{renderToken++;syncExtraTexts();if(document.getElementById('warehouseCategory').classList.contains('active'))renderWarehouseItems()},0)));
   syncExtraTexts();makeWarehouse();
 })();
 </script>'''
 
+NO_TRANSLATE = r'''<meta name="google" content="notranslate"><meta name="robots" content="notranslate">'''
+legacy.HTML = legacy.HTML.replace('</head>', NO_TRANSLATE + '</head>')
 legacy.HTML = legacy.HTML.replace('</body>', PATCH + '</body>')
 app = legacy.app
 
