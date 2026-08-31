@@ -7,7 +7,7 @@ const labels={
  control_io:{ru:'Бакара — входы / выходы I/O',he:'בקרה — כניסות / יציאות I/O',en:'Control — I/O modules'}
 };
 Object.assign(categoryLabels,labels);
-const obsolete=['control_comm','control_expansion','control_safety','control_power'];
+const obsolete=['control_comm','control_expansion','control_safety','control_power','plc_modules'];
 function text(x){return [x.name,x.specs,x.manufacturer,x.notes].join(' ').toLowerCase()}
 function classify(x){
  let s=text(x), p=String(x.name||'').toUpperCase(), all=(p+' '+s).toUpperCase();
@@ -27,22 +27,29 @@ const oldMake=window.makeWarehouse;
 window.makeWarehouse=function(){
  oldMake();
  const g=document.getElementById('warehouseGrid');if(!g)return;
- // Remove old duplicate control tiles created by earlier versions.
- obsolete.concat(['plc_modules']).forEach(id=>{
-   g.querySelectorAll('[data-split-cat="'+id+'"]').forEach(e=>e.remove());
+
+ // Remove categories the user no longer wants and all old split-control tiles.
+ const removeText=[
+  'מגעים','контакты','contacts',
+  'כבלים וחוטים','кабели и провода','cables and wires',
+  'כניסות כבל','кабельные вводы','cable glands',
+  'פנאומטיקה / שסתומים','פנאומטיקה','שסתומים','пневматика','клапаны','pneumatics','valves'
+ ];
+ Array.from(g.querySelectorAll('.warehouse-tile')).forEach(b=>{
+   let t=(b.textContent||'').trim().toLowerCase();
+   if(removeText.some(x=>t.includes(x.toLowerCase()))){(b.closest('.tile-wrap')||b).remove();return;}
+   // Remove every legacy duplicate of CPU, I/O and encoders. Canonical tiles are added below.
+   if(t.includes('cpu')||t.includes('i/o')||t.includes('אנקוד')||t.includes('энкод')||t.includes('encoder')||t==='בקרה'||t.includes('plc')){
+     (b.closest('.tile-wrap')||b).remove();
+   }
  });
+ obsolete.forEach(id=>g.querySelectorAll('[data-split-cat="'+id+'"]').forEach(e=>e.remove()));
+ // Ensure only one canonical tile for each retained control category.
  Object.keys(labels).forEach(id=>{
-   if(g.querySelector('[data-split-cat="'+id+'"]'))return;
+   g.querySelectorAll('[data-split-cat="'+id+'"]').forEach(e=>e.remove());
    let w=document.createElement('div');w.className='tile-wrap';w.setAttribute('data-split-cat',id);
    let b=document.createElement('button');b.className='warehouse-tile';b.onclick=()=>openWarehouseCategory(id);
    let l=labels[id];b.textContent=l[lang]||l.ru;w.appendChild(b);g.appendChild(w);
- });
- // Hide legacy PLC/control tile when it still exists in the original grid.
- Array.from(g.querySelectorAll('.warehouse-tile')).forEach(b=>{
-   let t=(b.textContent||'').toLowerCase();
-   if((t.includes('plc')&&t.includes('i/o'))||t==='בקרה' || t==='контроллеры / plc'){
-     let w=b.closest('.tile-wrap')||b;w.style.display='none';
-   }
  });
 };
 setTimeout(()=>{try{makeWarehouse()}catch(e){}},0);
