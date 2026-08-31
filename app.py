@@ -10,6 +10,7 @@ import search_layout_patch
 import drawings_patch
 import extruder4_drawing_structure_patch
 import extruder4_equipment_details_patch
+import extruder4_installation_split_patch
 
 PATCH = r'''<style>
 .qty-control{display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}.qty-control button{width:36px;height:36px;border:1px solid #aebfc1;border-radius:8px;background:#eef5f3;color:#34454b;font-size:22px;font-weight:700;cursor:pointer}.qty-control .qnum{min-width:42px;text-align:center;font-size:17px;font-weight:700}.warehouse-main-add{display:inline-block;margin:0 0 12px;padding:11px 16px;border:0;border-radius:9px;background:#527d83;color:#fff;font-size:15px;font-weight:700;cursor:pointer}.category-add{display:inline-block;margin:0 0 14px}.warehouse-grid .custom-cat{position:relative}.warehouse-grid .custom-cat .cat-delete{position:absolute;top:3px;right:3px;width:24px;height:24px;border:0;border-radius:50%;background:#fff;color:#777;cursor:pointer;display:none}.owner-mode .warehouse-grid .custom-cat .cat-delete{display:block}#addItemBtn{display:none!important}.item-actions button{cursor:pointer}.internal-code{font-weight:700;white-space:nowrap}
@@ -53,5 +54,6 @@ search_layout_patch.apply(legacy)
 drawings_patch.apply(legacy)
 extruder4_drawing_structure_patch.apply(legacy)
 extruder4_equipment_details_patch.apply(legacy)
+extruder4_installation_split_patch.apply(legacy)
 app = legacy.app
 if __name__ == '__main__': app.run(debug=True)
