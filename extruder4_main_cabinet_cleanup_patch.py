@@ -1,6 +1,7 @@
 def apply(legacy):
     patch = r'''<style>
 body.e4-main-cabinet-open #genericPartsInline{display:none!important}
+body.e4-main-cabinet-open #extruderMainPanelBlock{display:none!important}
 </style>
 <script>
 (function(){
@@ -10,12 +11,8 @@ body.e4-main-cabinet-open #genericPartsInline{display:none!important}
     var open=!!((full&&full.offsetParent!==null)||(inv&&inv.offsetParent!==null));
     document.body.classList.toggle('e4-main-cabinet-open',open);
   }
-  document.addEventListener('click',function(ev){
-    if(ev.target.closest('#e4FullCabinet,#e4MainCabinetInventory')){
-      ev.stopPropagation();
-      setTimeout(mark,0);
-    } else setTimeout(mark,0);
-  },true);
+  /* Do not intercept clicks here. This patch only controls visibility. */
+  document.addEventListener('click',function(){setTimeout(mark,0)},false);
   new MutationObserver(mark).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class','style']});
   setTimeout(mark,100);
 })();
