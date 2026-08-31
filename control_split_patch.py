@@ -30,6 +30,7 @@ window.makeWarehouse=function(){
  const removeText=[
   'מגעים','контакты','contacts',
   'מחברים','מחברים ותקעים','соединители','разъемы','разъёмы','connectors','plugs',
+  'מהדקים','מהדקי','клеммы','клеммники','terminal blocks','terminals',
   'כבלים וחוטים','кабели и провода','cables and wires',
   'כניסות כבל','кабельные вводы','cable glands',
   'פנאומטיקה / שסתומים','פנאומטיקה','שסתומים','пневматика','клапаны','pneumatics','valves'
