@@ -27,10 +27,9 @@ const oldMake=window.makeWarehouse;
 window.makeWarehouse=function(){
  oldMake();
  const g=document.getElementById('warehouseGrid');if(!g)return;
-
- // Remove categories the user no longer wants and all old split-control tiles.
  const removeText=[
   'מגעים','контакты','contacts',
+  'מחברים','מחברים ותקעים','соединители','разъемы','разъёмы','connectors','plugs',
   'כבלים וחוטים','кабели и провода','cables and wires',
   'כניסות כבל','кабельные вводы','cable glands',
   'פנאומטיקה / שסתומים','פנאומטיקה','שסתומים','пневматика','клапаны','pneumatics','valves'
@@ -38,13 +37,11 @@ window.makeWarehouse=function(){
  Array.from(g.querySelectorAll('.warehouse-tile')).forEach(b=>{
    let t=(b.textContent||'').trim().toLowerCase();
    if(removeText.some(x=>t.includes(x.toLowerCase()))){(b.closest('.tile-wrap')||b).remove();return;}
-   // Remove every legacy duplicate of CPU, I/O and encoders. Canonical tiles are added below.
    if(t.includes('cpu')||t.includes('i/o')||t.includes('אנקוד')||t.includes('энкод')||t.includes('encoder')||t==='בקרה'||t.includes('plc')){
      (b.closest('.tile-wrap')||b).remove();
    }
  });
  obsolete.forEach(id=>g.querySelectorAll('[data-split-cat="'+id+'"]').forEach(e=>e.remove()));
- // Ensure only one canonical tile for each retained control category.
  Object.keys(labels).forEach(id=>{
    g.querySelectorAll('[data-split-cat="'+id+'"]').forEach(e=>e.remove());
    let w=document.createElement('div');w.className='tile-wrap';w.setAttribute('data-split-cat',id);
