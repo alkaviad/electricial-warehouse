@@ -1,6 +1,6 @@
 def apply(legacy):
     patch = r'''<style>
-#e5StationCatalog{margin:10px 0 20px;padding:15px;border:2px solid #9fb8ba;border-radius:14px;background:#fff}.e5st-grid{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));gap:12px}.e5st-tile{min-height:74px;border:1px solid #cbd8d9;border-radius:11px;background:#f4f8f7;color:#34454b;font-size:14px;font-weight:700;padding:12px;cursor:pointer}.e5st-detail{border:1px solid #cbd8d9;border-radius:12px;padding:14px}.e5st-wrap{overflow:auto;max-height:620px}.e5st-table{width:100%;border-collapse:collapse;min-width:860px}.e5st-table th,.e5st-table td{padding:8px;border-bottom:1px solid #e3eaea;text-align:left;font-size:12px;vertical-align:top}.e5st-table th{position:sticky;top:0;background:#e8f1ef}.e5st-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.e5st-back{padding:8px 12px;border:1px solid #cbd8d9;border-radius:8px;background:#f4f8f7;cursor:pointer}.e5st-location{font-weight:700;margin:3px 0 13px}.e5st-sub{font-size:12px;color:#687b80;margin-bottom:12px}@media(max-width:850px){.e5st-grid{grid-template-columns:repeat(2,minmax(130px,1fr))}}
+#extruderSectionPage > #e5StationCatalog{display:block!important;margin:10px 0 20px;padding:15px;border:2px solid #9fb8ba;border-radius:14px;background:#fff}.e5st-grid{display:grid;grid-template-columns:repeat(3,minmax(150px,1fr));gap:12px}.e5st-tile{min-height:74px;border:1px solid #cbd8d9;border-radius:11px;background:#f4f8f7;color:#34454b;font-size:14px;font-weight:700;padding:12px;cursor:pointer}.e5st-detail{border:1px solid #cbd8d9;border-radius:12px;padding:14px}.e5st-wrap{overflow:auto;max-height:620px}.e5st-table{width:100%;border-collapse:collapse;min-width:860px}.e5st-table th,.e5st-table td{padding:8px;border-bottom:1px solid #e3eaea;text-align:left;font-size:12px;vertical-align:top}.e5st-table th{position:sticky;top:0;background:#e8f1ef}.e5st-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.e5st-back{padding:8px 12px;border:1px solid #cbd8d9;border-radius:8px;background:#f4f8f7;cursor:pointer}.e5st-location{font-weight:700;margin:3px 0 13px}.e5st-sub{font-size:12px;color:#687b80;margin-bottom:12px}@media(max-width:850px){.e5st-grid{grid-template-columns:repeat(2,minmax(130px,1fr))}}
 </style><script>
 (function(){
  function tx(ru,he,en){return lang==='he'?he:lang==='en'?en:ru}
@@ -104,9 +104,9 @@ def apply(legacy):
    let back=document.getElementById('e5stBack');if(back)back.onclick=function(e){e.stopPropagation();selected=null;render()};
  }
  let prev=window.openExtruderSection;
- if(typeof prev==='function'&&!prev.__e5calA3){
+ if(typeof prev==='function'&&!prev.__e5calA4){
    window.openExtruderSection=function(i){selected=null;let r=prev.apply(this,arguments);setTimeout(render,0);setTimeout(render,80);setTimeout(render,250);return r};
-   window.openExtruderSection.__e5calA3=true;
+   window.openExtruderSection.__e5calA4=true;
  }
  let obs=new MutationObserver(function(){setTimeout(render,0)});
  let page=document.getElementById('extruderSectionPage');if(page)obs.observe(page,{attributes:true,attributeFilter:['class']});
